@@ -4,7 +4,7 @@ from random_walk import RandomWalk
 
 while True:
     # Построение случайного блуждания
-    rw = RandomWalk(50000)
+    rw = RandomWalk(5_000_000)
     rw.fill_walk()
 
     # Нанесение точек на диаграмму
