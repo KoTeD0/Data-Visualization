@@ -10,12 +10,11 @@ with open(filename) as file:
 
     dates, highs, lows, precipitations = [], [], [], []
     for row in reader:
-        # print(row[2], row[3], row[4], row[5])
-        current_date = datetime.strptime(row[2], "%Y-%m-%d")
+        current_date = datetime.strptime(row[header_row.index('DATE')], "%Y-%m-%d")
         try:
-            high = float(row[4])
-            low = float(row[5])
-            precipitation = float(row[3])
+            high = float(row[header_row.index('TMAX')])
+            low = float(row[header_row.index('TMIN')])
+            precipitation = float(row[header_row.index('PRCP')])
         except ValueError:
             print(f"Missing data for {current_date}")
         else:
@@ -33,11 +32,12 @@ ax.plot(dates, lows, c='blue', alpha=1)
 plt.fill_between(dates, highs, lows, facecolor='yellow', alpha=0.1)
 
 # Форматирование диаграммы
-title = "Full Weather - 2020-2021\nMoscow, RU"
+title = f"Full Weather - 2020-2021\n{row[header_row.index('NAME')]}"
 plt.title(title, fontsize=20)
 plt.xlabel('', fontsize=16)
 fig.autofmt_xdate()
 plt.ylabel("Temperature (C)", fontsize=16)
 plt.tick_params(axis='both', which='major', labelsize=16)
 
+# plt.savefig('moscow_weather_plot')
 plt.show()
